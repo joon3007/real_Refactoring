@@ -1,35 +1,70 @@
 package com.nts.cleancode.collections;
 
 public abstract class AbstractCollection {
+	protected Object[] elements = new Object[10];
+	protected int size = 0;
+	protected boolean readOnly;
+	
 	public void addAll(AbstractCollection c) {
-		if (c instanceof Set) {
-			Set s = (Set) c;
-			for (int i = 0; i < s.size(); i++) {
-				if (!contains(s.getElementAt(i))) {
-					add(s.getElementAt(i));
-				}
-			}
-
-		} else if (c instanceof List) {
-			List l = (List) c;
-			for (int i = 0; i < l.size(); i++) {
-				if (!contains(l.get(i))) {
-					add(l.get(i));
-				}
-			}
-		} else if (c instanceof Map) {
-			Map m = (Map) c;
-			for (int i = 0; i < m.size(); i++)
-				add(m.keys[i], m.values[i]);
-		}
+			for (int i = 0; i < c.size(); i++) 
+				if (!contains(c.get(i))) 
+					add(c.get(i));
+	
 	}
 
-	public abstract boolean isEmpty();
-	public abstract void add(Object element);
+	public boolean isEmpty() {
+		return size == 0;
+	}
+
+	public void add(Object element) {
+		if (readOnly)
+			return;
+		
+		if (shouldGrow()) 
+			grow();
+		
+		addElement(element);
+		
+	}
+
+	protected void addElement(Object element) {
+		elements[size++] = element;
+	}
+
+	protected void grow() {
+		Object[] newElements =
+			new Object[elements.length + 10];
+		for (int i = 0; i < size; i++)
+			newElements[i] = elements[i];
+		elements = newElements;
+	}
+
+	protected boolean shouldGrow() {
+		return size + 1 > elements.length;
+	}
+
+	public boolean contains(Object element) {
+		for (int i=0; i<size; i++) 
+			if (elements[i].equals(element))
+				return true;
+		return false;
+	}
+
+	public int size() {
+		return size;
+	}
+
+	public Object get(int i) {
+		return elements[i];
+	}
+
+	public int capacity() {
+		return elements.length;
+	}
 	public abstract boolean remove(Object element);
-	public abstract boolean contains(Object element);
-	public abstract int size();
 
-	public void add(Object key, Object value) {
+	public void setReadOnly(boolean b) {
+		readOnly = b;
 	}
+
 }
