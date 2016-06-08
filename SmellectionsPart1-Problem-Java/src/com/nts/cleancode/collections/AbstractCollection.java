@@ -4,12 +4,12 @@ public abstract class AbstractCollection {
 	protected Object[] elements = new Object[10];
 	protected int size = 0;
 	protected boolean readOnly;
-	
+
 	public void addAll(AbstractCollection c) {
-			for (int i = 0; i < c.size(); i++) 
-				if (!contains(c.get(i))) 
-					add(c.get(i));
-	
+		for (int i = 0; i < c.size(); i++)
+			if (!contains(c.get(i)))
+				add(c.get(i));
+
 	}
 
 	public boolean isEmpty() {
@@ -19,12 +19,12 @@ public abstract class AbstractCollection {
 	public void add(Object element) {
 		if (readOnly)
 			return;
-		
-		if (shouldGrow()) 
+
+		if (shouldGrow())
 			grow();
-		
+
 		addElement(element);
-		
+
 	}
 
 	protected void addElement(Object element) {
@@ -32,8 +32,7 @@ public abstract class AbstractCollection {
 	}
 
 	protected void grow() {
-		Object[] newElements =
-			new Object[elements.length + 10];
+		Object[] newElements = new Object[elements.length + 10];
 		for (int i = 0; i < size; i++)
 			newElements[i] = elements[i];
 		elements = newElements;
@@ -44,7 +43,7 @@ public abstract class AbstractCollection {
 	}
 
 	public boolean contains(Object element) {
-		for (int i=0; i<size; i++) 
+		for (int i = 0; i < size; i++)
 			if (elements[i].equals(element))
 				return true;
 		return false;
@@ -61,6 +60,7 @@ public abstract class AbstractCollection {
 	public int capacity() {
 		return elements.length;
 	}
+
 	public void setReadOnly(boolean b) {
 		readOnly = b;
 	}
@@ -68,21 +68,25 @@ public abstract class AbstractCollection {
 	public boolean remove(Object element) {
 		if (readOnly)
 			return false;
-		else 	
-			for (int i = 0; i < size; i++)
-				if (elements[i].equals(element)) {
-					elements[i] = null;
-					Object[] newElements = new Object[size - 1];
-					int k = 0;
-					for (int j = 0; j < size; j++) {
-						if (elements[j] != null)
-							newElements[k++] = elements[j];
-					}
-					size--;
-					elements = newElements;
-					return true;
-				}
+
+		for (int i = 0; i < size; i++)
+			if (elements[i].equals(element)) {
+				removeElement(i);
+				return true;
+			}
 		return false;
+	}
+
+	protected void removeElement(int i) {
+		elements[i] = null;
+		Object[] newElements = new Object[size - 1];
+		int k = 0;
+		for (int j = 0; j < size; j++) {
+			if (elements[j] != null)
+				newElements[k++] = elements[j];
+		}
+		size--;
+		elements = newElements;
 	}
 
 }
