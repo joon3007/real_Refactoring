@@ -1,6 +1,6 @@
 package com.nts.cleancode.collections;
 
-public class List extends AbstractList {
+public class List extends AbstractCollection  {
 	private Object[] elements = new Object[10];
 	private int size = 0;
 	private boolean readOnly;
@@ -10,17 +10,30 @@ public class List extends AbstractList {
 	}
 
 	public void add(Object element) {
-		if (!readOnly) {
-			int newSize = size + 1;
-			if (newSize > elements.length) {
-				Object[] newElements =
-					new Object[elements.length + 10];
-				for (int i = 0; i < size; i++)
-					newElements[i] = elements[i];
-				elements = newElements;
-			}
-			elements[size++] = element;
-		}
+		if (readOnly)
+			return;
+		
+		if (shouldGrow()) 
+			grow();
+		
+		addElement(element);
+		
+	}
+
+	protected void addElement(Object element) {
+		elements[size++] = element;
+	}
+
+	protected void grow() {
+		Object[] newElements =
+			new Object[elements.length + 10];
+		for (int i = 0; i < size; i++)
+			newElements[i] = elements[i];
+		elements = newElements;
+	}
+
+	protected boolean shouldGrow() {
+		return size + 1 > elements.length;
 	}
 
 	public boolean contains(Object element) {
