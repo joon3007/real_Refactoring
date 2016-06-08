@@ -5,8 +5,8 @@ public abstract class AbstractCollection {
 		if (c instanceof Set) {
 			Set s = (Set) c;
 			for (int i = 0; i < s.size(); i++) {
-				if (!contains(s.getElementAt(i))) {
-					add(s.getElementAt(i));
+				if (!contains(s.get(i))) {
+					add(s.get(i));
 				}
 			}
 
@@ -17,11 +17,7 @@ public abstract class AbstractCollection {
 					add(l.get(i));
 				}
 			}
-		} else if (c instanceof Map) {
-			Map m = (Map) c;
-			for (int i = 0; i < m.size(); i++)
-				add(m.keys[i], m.values[i]);
-		}
+		} 
 	}
 
 	public abstract boolean isEmpty();
@@ -30,6 +26,4 @@ public abstract class AbstractCollection {
 	public abstract boolean contains(Object element);
 	public abstract int size();
 
-	public void add(Object key, Object value) {
-	}
 }

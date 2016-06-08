@@ -47,6 +47,14 @@ public class List extends AbstractCollection  {
 		return size;
 	}
 
+	public Object get(int i) {
+		return elements[i];
+	}
+
+	public int capacity() {
+		return elements.length;
+	}
+
 	public boolean remove(Object element) {
 		if (readOnly)
 			return false;
@@ -67,14 +75,6 @@ public class List extends AbstractCollection  {
 		return false;
 	}
 	
-	public Object get(int i) {
-		return elements[i];
-	}
-
-	public int capacity() {
-		return elements.length;
-	}
-
 	public void set(int i, Object value) {
 		if (!readOnly) {
 			if (i >= size)
