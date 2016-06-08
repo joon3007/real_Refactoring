@@ -2,6 +2,7 @@ package com.nts.cleancode.collections;
 
 public class Set extends AbstractCollection {
 	private static int INITIAL_CAPACITY = 10;
+	
 	public void add(Object element) {
 		if (contains(element))
 			return;
@@ -26,10 +27,5 @@ public class Set extends AbstractCollection {
 				return true;
 			}
 		return false;
-	}
-
-
-	public void setReadOnly(boolean b) {
-		readOnly = b;
 	}
 }

@@ -4,6 +4,7 @@ public abstract class AbstractCollection {
 	protected Object[] elements = new Object[10];
 	protected int size = 0;
 	protected boolean readOnly;
+	
 	public void addAll(AbstractCollection c) {
 			for (int i = 0; i < c.size(); i++) 
 				if (!contains(c.get(i))) 
@@ -11,7 +12,6 @@ public abstract class AbstractCollection {
 	
 	}
 
-	public abstract boolean remove(Object element);
 	public boolean isEmpty() {
 		return size == 0;
 	}
@@ -60,6 +60,11 @@ public abstract class AbstractCollection {
 
 	public int capacity() {
 		return elements.length;
+	}
+	public abstract boolean remove(Object element);
+
+	public void setReadOnly(boolean b) {
+		readOnly = b;
 	}
 
 }

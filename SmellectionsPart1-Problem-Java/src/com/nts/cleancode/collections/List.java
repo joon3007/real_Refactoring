@@ -28,8 +28,4 @@ public class List extends AbstractCollection  {
 			elements[i] = value;
 		}
 	}
-
-	public void setReadOnly(boolean b) {
-		readOnly = b;
-	}
 }
