@@ -61,10 +61,28 @@ public abstract class AbstractCollection {
 	public int capacity() {
 		return elements.length;
 	}
-	public abstract boolean remove(Object element);
-
 	public void setReadOnly(boolean b) {
 		readOnly = b;
+	}
+
+	public boolean remove(Object element) {
+		if (readOnly)
+			return false;
+		else 	
+			for (int i = 0; i < size; i++)
+				if (elements[i].equals(element)) {
+					elements[i] = null;
+					Object[] newElements = new Object[size - 1];
+					int k = 0;
+					for (int j = 0; j < size; j++) {
+						if (elements[j] != null)
+							newElements[k++] = elements[j];
+					}
+					size--;
+					elements = newElements;
+					return true;
+				}
+		return false;
 	}
 
 }
